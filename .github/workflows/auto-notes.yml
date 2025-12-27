@@ -1,8 +1,11 @@
 name: Docker & Linux Learning Log
 
+permissions:
+  contents: write
+
 on:
   schedule:
-    - cron: '0 6 * * *'   # Runs once per day at 06:00 UTC
+    - cron: '0 6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -17,7 +20,6 @@ jobs:
         run: |
           mkdir -p docs
 
-          # Get the first commit date safely
           START_DATE=$(git log --reverse --format=%cs | head -n 1)
 
           if [ -z "$START_DATE" ]; then
@@ -28,21 +30,18 @@ jobs:
             DAYS=$(( (TODAY - START) / 86400 ))
           fi
 
-          # First ~60 days: Docker
           if [ "$DAYS" -lt 60 ]; then
             FILE="docs/docker.md"
             echo "" >> $FILE
             echo "### Day $DAYS – Docker Basics" >> $FILE
-            echo "- Docker is a containerization tool that packages applications with all dependencies." >> $FILE
-            echo "- Core concepts include images, containers, Dockerfiles, and registries." >> $FILE
-
-          # After that: Linux
+            echo "- Docker is a containerization tool that packages applications with dependencies." >> $FILE
+            echo "- Core concepts include images, containers, and Dockerfiles." >> $FILE
           else
             FILE="docs/linux.md"
             echo "" >> $FILE
             echo "### Day $DAYS – Linux Fundamentals" >> $FILE
-            echo "- Linux is the foundation of cloud servers and container platforms." >> $FILE
-            echo "- Common commands include ls, cd, ps, top, grep, and chmod." >> $FILE
+            echo "- Linux is the foundation of cloud servers and containers." >> $FILE
+            echo "- Common commands: ls, cd, ps, top, grep, chmod." >> $FILE
           fi
 
       - name: Commit changes
