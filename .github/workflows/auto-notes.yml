@@ -1,0 +1,43 @@
+name: Docker & Linux Learning Log
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-learning-log:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate learning note
+        run: |
+          mkdir -p docs
+
+          START_DATE=$(git log --reverse --format=%cs | head -n 1)
+          TODAY=$(date +%s)
+          START=$(date -d "$START_DATE" +%s)
+          DAYS=$(( (TODAY - START) / 86400 ))
+
+          if [ "$DAYS" -lt 60 ]; then
+            FILE="docs/docker.md"
+            echo "" >> $FILE
+            echo "### Day $DAYS – Docker Basics" >> $FILE
+            echo "- Docker is a containerization tool that packages applications with dependencies." >> $FILE
+            echo "- Core concepts: image, container, Dockerfile." >> $FILE
+          else
+            FILE="docs/linux.md"
+            echo "" >> $FILE
+            echo "### Day $DAYS – Linux Fundamentals" >> $FILE
+            echo "- Linux is the foundation of cloud and container platforms." >> $FILE
+            echo "- Common commands: ls, cd, ps, top, grep." >> $FILE
+          fi
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: daily docker/linux learning update"
+          branch: main
