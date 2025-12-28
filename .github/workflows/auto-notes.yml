@@ -5,7 +5,7 @@ permissions:
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 6 * * *'   # Daily at 6 AM UTC
   workflow_dispatch:
 
 jobs:
@@ -16,32 +16,338 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate learning note
+      - name: Generate daily learning note
         run: |
           mkdir -p docs
 
+          DOCKER_FILE="docs/docker.md"
+          LINUX_FILE="docs/linux.md"
+
           START_DATE=$(git log --reverse --format=%cs | head -n 1)
+          TODAY=$(date +%s)
+          START=$(date -d "$START_DATE" +%s)
+          DAY=$(( (TODAY - START) / 86400 ))
 
-          if [ -z "$START_DATE" ]; then
-            DAYS=0
-          else
-            TODAY=$(date +%s)
-            START=$(date -d "$START_DATE" +%s)
-            DAYS=$(( (TODAY - START) / 86400 ))
-          fi
+          ############################
+          # DOCKER CHAPTERS (22 DAYS)
+          ############################
+          DOCKER_CHAPTERS=(
+          "Docker Basics
+          - Docker packages apps with dependencies
+          - Containers are lightweight vs VMs
+          - Solves environment inconsistency
+          - Fast startup and portability
+          - Core DevOps foundation"
 
-          if [ "$DAYS" -lt 60 ]; then
-            FILE="docs/docker.md"
-            echo "" >> $FILE
-            echo "### Day $DAYS – Docker Basics" >> $FILE
-            echo "- Docker is a containerization tool that packages applications with dependencies." >> $FILE
-            echo "- Core concepts include images, containers, and Dockerfiles." >> $FILE
+          "Docker Architecture
+          - Client–daemon model
+          - Docker daemon manages containers
+          - Docker client issues commands
+          - Images stored in registries
+          - Docker Hub is default"
+
+          "Docker Installation
+          - Native on Linux
+          - Uses VM on Windows/macOS
+          - docker --version verifies install
+          - hello-world validates setup
+          - Docker Desktop manages resources"
+
+          "Docker Images
+          - Read-only templates
+          - Built in layers
+          - Cached for performance
+          - Smaller images are faster
+          - docker images lists them"
+
+          "Containers
+          - Running instance of image
+          - Ephemeral by default
+          - docker ps shows running
+          - docker ps -a shows all
+          - Can start/stop/remove"
+
+          "Docker Commands
+          - docker run creates containers
+          - docker exec runs commands inside
+          - docker logs for debugging
+          - docker rm removes containers
+          - docker stats monitors usage"
+
+          "Dockerfile Basics
+          - Blueprint for image creation
+          - Each instruction is a layer
+          - FROM defines base image
+          - RUN executes build commands
+          - CMD runs container process"
+
+          "Dockerfile Instructions
+          - WORKDIR sets path
+          - COPY transfers files
+          - ENV defines variables
+          - EXPOSE documents ports
+          - ENTRYPOINT defines executable"
+
+          "Dockerfile Best Practices
+          - Order layers for caching
+          - Minimize image size
+          - Avoid root user
+          - Clean package cache
+          - Use .dockerignore"
+
+          "Building Images
+          - docker build creates images
+          - -t tags image
+          - Build context matters
+          - Cache speeds rebuilds
+          - .dockerignore improves speed"
+
+          "Tagging Images
+          - Tags identify versions
+          - latest is default
+          - Semantic versioning preferred
+          - Same image can have many tags
+          - docker tag renames"
+
+          "Docker Registries
+          - Store and distribute images
+          - Docker Hub is public
+          - docker login authenticates
+          - docker push uploads images
+          - docker pull downloads"
+
+          "Logs & Monitoring
+          - docker logs shows output
+          - docker stats shows usage
+          - Useful for debugging
+          - Monitor CPU & memory
+          - Improves reliability"
+
+          "Docker Volumes
+          - Persist container data
+          - Survive container removal
+          - Managed by Docker
+          - Used for databases
+          - Share data across containers"
+
+          "Volume Types
+          - Named volumes preferred
+          - Bind mounts for development
+          - Anonymous volumes discouraged
+          - docker volume ls lists
+          - docker volume prune cleans"
+
+          "Docker Networking
+          - Enables container communication
+          - Bridge is default network
+          - Containers use names not IPs
+          - Improves security
+          - docker network ls"
+
+          "Custom Networks
+          - Automatic DNS resolution
+          - Better isolation
+          - Easier service discovery
+          - docker network create
+          - Avoid port conflicts"
+
+          "Multi-Container Apps
+          - Apps split into services
+          - Database not exposed
+          - Internal communication only
+          - Env vars configure services
+          - Microservice friendly"
+
+          "Docker Compose
+          - YAML-based orchestration
+          - Manages multi-container apps
+          - One command start/stop
+          - Auto networks & volumes
+          - Dev-friendly"
+
+          "Debugging Containers
+          - docker exec enters container
+          - docker inspect shows metadata
+          - docker diff tracks changes
+          - docker cp copies files
+          - Logs first, always"
+
+          "Performance Management
+          - Containers share host
+          - CPU/memory limits prevent abuse
+          - docker stats monitors usage
+          - Optimize image size
+          - Improves stability"
+
+          "Docker in Production
+          - Minimal images
+          - Non-root containers
+          - Logging & monitoring
+          - CI/CD automation
+          - Security best practices"
+          )
+
+          ############################
+          # LINUX CHAPTERS
+          ############################
+          LINUX_CHAPTERS=(
+          "Linux Basics
+          - Linux is open-source OS
+          - Backbone of cloud & containers
+          - Most servers run Linux
+          - Essential for DevOps
+          - Powers Docker"
+
+          "Linux File System
+          - / is root directory
+          - /etc holds configs
+          - /var stores logs/data
+          - /home user directories
+          - /bin essential commands"
+
+          "Navigation Commands
+          - pwd shows current path
+          - ls lists files
+          - cd changes directory
+          - Absolute vs relative paths
+          - Hidden files start with dot"
+
+          "File Operations
+          - touch creates files
+          - mkdir creates directories
+          - cp copies files
+          - mv moves/renames
+          - rm deletes files"
+
+          "Finding Files
+          - find searches filesystem
+          - locate uses database
+          - which finds command path
+          - whereis finds binaries
+          - Useful for debugging"
+
+          "Permissions Basics
+          - rwx model controls access
+          - Owner, group, others
+          - Numeric values (755, 644)
+          - chmod changes permissions
+          - Security critical"
+
+          "Ownership Management
+          - chown changes owner
+          - chgrp changes group
+          - Recursive ownership fixes
+          - Important for Docker volumes
+          - Avoid permission errors"
+
+          "Viewing Files
+          - cat prints content
+          - less for large files
+          - head/tail partial view
+          - tail -f for logs
+          - Debugging friendly"
+
+          "Searching Text
+          - grep finds patterns
+          - Case insensitive search
+          - Recursive log scanning
+          - Pipe with other commands
+          - Essential for troubleshooting"
+
+          "Text Processing
+          - sed edits streams
+          - awk processes columns
+          - cut extracts fields
+          - sort & uniq analyze logs
+          - Used in automation"
+
+          "Process Management
+          - ps lists processes
+          - top shows live usage
+          - kill stops processes
+          - Signals control behavior
+          - Docker relies on this"
+
+          "Background Jobs
+          - & runs in background
+          - jobs lists tasks
+          - fg/bg controls jobs
+          - nohup persists jobs
+          - Used in servers"
+
+          "System Info
+          - uname shows kernel
+          - uptime system runtime
+          - who shows users
+          - last login history
+          - Diagnose issues"
+
+          "Disk Usage
+          - df shows disk space
+          - du shows directory size
+          - Find large files
+          - Docker disk usage
+          - Prevent outages"
+
+          "Memory Usage
+          - free shows RAM
+          - vmstat memory stats
+          - Detect leaks
+          - Important for containers
+          - Optimize usage"
+
+          "CPU Monitoring
+          - lscpu CPU info
+          - top/htop live view
+          - mpstat per CPU
+          - Detect bottlenecks
+          - Performance tuning"
+
+          "Networking
+          - ip shows interfaces
+          - netstat/ss ports
+          - ping tests connectivity
+          - curl tests HTTP
+          - Docker networking relies on this"
+
+          "Package Management
+          - apt installs software
+          - yum/dnf for RHEL
+          - dpkg/rpm low-level
+          - Clean unused packages
+          - Install Docker dependencies"
+
+          "Installing Docker
+          - Add official repo
+          - Install engine & CLI
+          - Enable Docker service
+          - Run hello-world
+          - Add user to docker group"
+
+          "User Management
+          - useradd creates users
+          - usermod modifies users
+          - passwd sets password
+          - Groups control access
+          - Secure multi-user systems"
+          )
+
+          ############################
+          # WRITE CONTENT
+          ############################
+          if [ "$DAY" -lt 22 ]; then
+            echo "" >> "$DOCKER_FILE"
+            echo "## Day $DAY – ${DOCKER_CHAPTERS[$DAY]%%$'\n'*}" >> "$DOCKER_FILE"
+            echo "${DOCKER_CHAPTERS[$DAY]#*$'\n'}" >> "$DOCKER_FILE"
           else
-            FILE="docs/linux.md"
-            echo "" >> $FILE
-            echo "### Day $DAYS – Linux Fundamentals" >> $FILE
-            echo "- Linux is the foundation of cloud servers and containers." >> $FILE
-            echo "- Common commands: ls, cd, ps, top, grep, chmod." >> $FILE
+            LDAY=$((DAY - 22))
+            if [ "$LDAY" -ge "${#LINUX_CHAPTERS[@]}" ]; then
+              echo "Linux learning completed."
+              exit 0
+            fi
+            echo "" >> "$LINUX_FILE"
+            echo "## Day $LDAY – ${LINUX_CHAPTERS[$LDAY]%%$'\n'*}" >> "$LINUX_FILE"
+            echo "${LINUX_CHAPTERS[$LDAY]#*$'\n'}" >> "$LINUX_FILE"
           fi
 
       - name: Commit changes
