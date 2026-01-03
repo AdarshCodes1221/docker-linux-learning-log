@@ -37,3 +37,10 @@
 - Docker client issues commands
 - Images stored in registries
 - Docker Hub is default
+
+## Day 1 – Docker Architecture
+- Client–daemon model
+- Docker daemon manages containers
+- Docker client issues commands
+- Images stored in registries
+- Docker Hub is default
