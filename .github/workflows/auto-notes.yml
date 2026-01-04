@@ -22,11 +22,18 @@ jobs:
 
           DOCKER_FILE="docs/docker.md"
           LINUX_FILE="docs/linux.md"
+          COUNTER_FILE="docs/.day_counter"
 
-          START_DATE=$(git log --reverse --format=%cs | head -n 1)
-          TODAY=$(date +%s)
-          START=$(date -d "$START_DATE" +%s)
-          DAY=$(( (TODAY - START) / 86400 ))
+          # ----------------------------
+          # FIXED DAY LOGIC (ONLY CHANGE)
+          # ----------------------------
+          if [ ! -f "$COUNTER_FILE" ]; then
+            echo "0" > "$COUNTER_FILE"
+          fi
+
+          DAY=$(cat "$COUNTER_FILE")
+          NEXT_DAY=$((DAY + 1))
+          echo "$NEXT_DAY" > "$COUNTER_FILE"
 
           ############################
           # DOCKER CHAPTERS (22 DAYS)
