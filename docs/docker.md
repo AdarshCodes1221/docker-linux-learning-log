@@ -51,3 +51,10 @@
 - Docker client issues commands
 - Images stored in registries
 - Docker Hub is default
+
+## Day 0 – Docker Basics
+- Docker packages apps with dependencies
+- Containers are lightweight vs VMs
+- Solves environment inconsistency
+- Fast startup and portability
+- Core DevOps foundation
