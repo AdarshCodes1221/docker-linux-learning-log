@@ -65,3 +65,10 @@
 - Docker client issues commands
 - Images stored in registries
 - Docker Hub is default
+
+## Day 2 – Docker Installation
+- Native on Linux
+- Uses VM on Windows/macOS
+- docker --version verifies install
+- hello-world validates setup
+- Docker Desktop manages resources
