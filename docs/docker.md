@@ -72,3 +72,10 @@
 - docker --version verifies install
 - hello-world validates setup
 - Docker Desktop manages resources
+
+## Day 3 – Docker Images
+- Read-only templates
+- Built in layers
+- Cached for performance
+- Smaller images are faster
+- docker images lists them
