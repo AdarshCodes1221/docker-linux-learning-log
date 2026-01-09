@@ -79,3 +79,10 @@
 - Cached for performance
 - Smaller images are faster
 - docker images lists them
+
+## Day 4 – Containers
+- Running instance of image
+- Ephemeral by default
+- docker ps shows running
+- docker ps -a shows all
+- Can start/stop/remove
