@@ -86,3 +86,10 @@
 - docker ps shows running
 - docker ps -a shows all
 - Can start/stop/remove
+
+## Day 5 – Docker Commands
+- docker run creates containers
+- docker exec runs commands inside
+- docker logs for debugging
+- docker rm removes containers
+- docker stats monitors usage
