@@ -93,3 +93,10 @@
 - docker logs for debugging
 - docker rm removes containers
 - docker stats monitors usage
+
+## Day 6 – Dockerfile Basics
+- Blueprint for image creation
+- Each instruction is a layer
+- FROM defines base image
+- RUN executes build commands
+- CMD runs container process
