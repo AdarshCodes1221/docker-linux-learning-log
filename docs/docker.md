@@ -100,3 +100,10 @@
 - FROM defines base image
 - RUN executes build commands
 - CMD runs container process
+
+## Day 7 – Dockerfile Instructions
+- WORKDIR sets path
+- COPY transfers files
+- ENV defines variables
+- EXPOSE documents ports
+- ENTRYPOINT defines executable
