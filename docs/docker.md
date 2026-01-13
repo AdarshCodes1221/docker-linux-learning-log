@@ -107,3 +107,10 @@
 - ENV defines variables
 - EXPOSE documents ports
 - ENTRYPOINT defines executable
+
+## Day 8 – Dockerfile Best Practices
+- Order layers for caching
+- Minimize image size
+- Avoid root user
+- Clean package cache
+- Use .dockerignore
