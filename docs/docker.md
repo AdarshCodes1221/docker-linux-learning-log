@@ -114,3 +114,10 @@
 - Avoid root user
 - Clean package cache
 - Use .dockerignore
+
+## Day 9 – Building Images
+- docker build creates images
+- -t tags image
+- Build context matters
+- Cache speeds rebuilds
+- .dockerignore improves speed
