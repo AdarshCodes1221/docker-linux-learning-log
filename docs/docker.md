@@ -121,3 +121,10 @@
 - Build context matters
 - Cache speeds rebuilds
 - .dockerignore improves speed
+
+## Day 10 – Tagging Images
+- Tags identify versions
+- latest is default
+- Semantic versioning preferred
+- Same image can have many tags
+- docker tag renames
