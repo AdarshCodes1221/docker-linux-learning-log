@@ -128,3 +128,10 @@
 - Semantic versioning preferred
 - Same image can have many tags
 - docker tag renames
+
+## Day 11 – Docker Registries
+- Store and distribute images
+- Docker Hub is public
+- docker login authenticates
+- docker push uploads images
+- docker pull downloads
