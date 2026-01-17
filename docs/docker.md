@@ -135,3 +135,10 @@
 - docker login authenticates
 - docker push uploads images
 - docker pull downloads
+
+## Day 12 – Logs & Monitoring
+- docker logs shows output
+- docker stats shows usage
+- Useful for debugging
+- Monitor CPU & memory
+- Improves reliability
