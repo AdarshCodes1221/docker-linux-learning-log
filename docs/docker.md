@@ -142,3 +142,10 @@
 - Useful for debugging
 - Monitor CPU & memory
 - Improves reliability
+
+## Day 13 – Docker Volumes
+- Persist container data
+- Survive container removal
+- Managed by Docker
+- Used for databases
+- Share data across containers
