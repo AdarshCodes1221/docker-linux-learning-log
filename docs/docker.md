@@ -149,3 +149,10 @@
 - Managed by Docker
 - Used for databases
 - Share data across containers
+
+## Day 14 – Volume Types
+- Named volumes preferred
+- Bind mounts for development
+- Anonymous volumes discouraged
+- docker volume ls lists
+- docker volume prune cleans
