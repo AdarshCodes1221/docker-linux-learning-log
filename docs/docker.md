@@ -156,3 +156,10 @@
 - Anonymous volumes discouraged
 - docker volume ls lists
 - docker volume prune cleans
+
+## Day 15 – Docker Networking
+- Enables container communication
+- Bridge is default network
+- Containers use names not IPs
+- Improves security
+- docker network ls
