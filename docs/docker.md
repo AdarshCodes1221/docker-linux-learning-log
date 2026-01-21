@@ -163,3 +163,10 @@
 - Containers use names not IPs
 - Improves security
 - docker network ls
+
+## Day 16 – Custom Networks
+- Automatic DNS resolution
+- Better isolation
+- Easier service discovery
+- docker network create
+- Avoid port conflicts
