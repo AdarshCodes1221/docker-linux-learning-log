@@ -170,3 +170,10 @@
 - Easier service discovery
 - docker network create
 - Avoid port conflicts
+
+## Day 17 – Multi-Container Apps
+- Apps split into services
+- Database not exposed
+- Internal communication only
+- Env vars configure services
+- Microservice friendly
