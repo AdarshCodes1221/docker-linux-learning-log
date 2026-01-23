@@ -177,3 +177,10 @@
 - Internal communication only
 - Env vars configure services
 - Microservice friendly
+
+## Day 18 – Docker Compose
+- YAML-based orchestration
+- Manages multi-container apps
+- One command start/stop
+- Auto networks & volumes
+- Dev-friendly
