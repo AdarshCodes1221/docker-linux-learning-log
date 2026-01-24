@@ -184,3 +184,10 @@
 - One command start/stop
 - Auto networks & volumes
 - Dev-friendly
+
+## Day 19 – Debugging Containers
+- docker exec enters container
+- docker inspect shows metadata
+- docker diff tracks changes
+- docker cp copies files
+- Logs first, always
