@@ -191,3 +191,10 @@
 - docker diff tracks changes
 - docker cp copies files
 - Logs first, always
+
+## Day 20 – Performance Management
+- Containers share host
+- CPU/memory limits prevent abuse
+- docker stats monitors usage
+- Optimize image size
+- Improves stability
