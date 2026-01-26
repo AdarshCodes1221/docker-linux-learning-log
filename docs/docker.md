@@ -198,3 +198,10 @@
 - docker stats monitors usage
 - Optimize image size
 - Improves stability
+
+## Day 21 – Docker in Production
+- Minimal images
+- Non-root containers
+- Logging & monitoring
+- CI/CD automation
+- Security best practices
